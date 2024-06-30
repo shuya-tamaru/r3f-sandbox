@@ -15,16 +15,18 @@ export default function TeleportCanvas() {
           fov: 45,
           near: 0.001,
           far: 200,
-          position: [1, 1, 1],
+          position: [5, 5, 5],
         }}
       >
         <XR>
           <Controllers />
           <Hands />
           <mesh>
-            <boxGeometry />
-            <meshBasicMaterial color="blue" />
+            <sphereGeometry />
+            <meshStandardMaterial color="blue" wireframe />
           </mesh>
+          <ambientLight />
+          <directionalLight position={[0, 10, 0]} intensity={1} />
         </XR>
         <OrbitControls makeDefault />
       </Canvas>
