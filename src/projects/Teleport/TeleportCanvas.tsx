@@ -30,10 +30,6 @@ export default function TeleportCanvas() {
         <XR>
           <Controllers />
           <Hands />
-          <mesh>
-            <sphereGeometry />
-            <meshStandardMaterial color="blue" wireframe />
-          </mesh>
           <InteractiveMesh />
           <ambientLight />
           <directionalLight position={[0, 10, 0]} intensity={1} />
@@ -65,7 +61,7 @@ function InteractiveMesh() {
   return (
     <TransformControls ref={transformRef} mode="translate">
       <mesh ref={meshRef} position={[0, 1, 0]}>
-        <boxGeometry args={[0.5, 0.5, 0.5]} />
+        <sphereGeometry args={[0.5, 0.5, 0.5]} />
         <meshStandardMaterial color="blue" />
       </mesh>
     </TransformControls>
