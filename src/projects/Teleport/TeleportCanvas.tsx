@@ -63,11 +63,7 @@ function InteractiveMesh() {
   });
 
   return (
-    <TransformControls
-      ref={transformRef}
-      mode="translate"
-      // args={[camera as PerspectiveCamera, gl.domElement]}
-    >
+    <TransformControls ref={transformRef} mode="translate">
       <mesh ref={meshRef} position={[0, 1, 0]}>
         <boxGeometry args={[0.5, 0.5, 0.5]} />
         <meshStandardMaterial color="blue" />
