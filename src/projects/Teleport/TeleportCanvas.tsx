@@ -1,9 +1,18 @@
 import { Box } from "@chakra-ui/react";
-import { VRButton, ARButton, XR, Controllers, Hands } from "@react-three/xr";
-import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import React from "react";
+import {
+  VRButton,
+  ARButton,
+  XR,
+  Controllers,
+  Hands,
+  useXREvent,
+} from "@react-three/xr";
+import { OrbitControls, TransformControls } from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
+import React, { useRef } from "react";
 import Teleport from "./Teleport";
+import * as THREE from "three";
+import { TransformControls as TransformControlsImpl } from "three-stdlib";
 
 export default function TeleportCanvas() {
   return (
@@ -25,11 +34,44 @@ export default function TeleportCanvas() {
             <sphereGeometry />
             <meshStandardMaterial color="blue" wireframe />
           </mesh>
+          <InteractiveMesh />
           <ambientLight />
           <directionalLight position={[0, 10, 0]} intensity={1} />
         </XR>
         <OrbitControls makeDefault />
       </Canvas>
     </Box>
+  );
+}
+
+function InteractiveMesh() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const transformRef = useRef<TransformControlsImpl>(null);
+  const { gl, camera } = useThree();
+
+  // Event handler for controller interaction
+  useXREvent("selectstart", () => {
+    if (transformRef.current && meshRef.current) {
+      transformRef.current.attach(meshRef.current);
+    }
+  });
+
+  useXREvent("selectend", () => {
+    if (transformRef.current) {
+      transformRef.current.detach();
+    }
+  });
+
+  return (
+    <TransformControls
+      ref={transformRef}
+      mode="translate"
+      // args={[camera as PerspectiveCamera, gl.domElement]}
+    >
+      <mesh ref={meshRef} position={[0, 1, 0]}>
+        <boxGeometry args={[0.5, 0.5, 0.5]} />
+        <meshStandardMaterial color="blue" />
+      </mesh>
+    </TransformControls>
   );
 }
