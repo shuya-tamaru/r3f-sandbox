@@ -61,8 +61,8 @@ function InteractiveMesh() {
   return (
     <TransformControls ref={transformRef} mode="translate">
       <mesh ref={meshRef} position={[0, 1, 0]}>
-        <sphereGeometry args={[0.5, 0.5, 0.5]} />
-        <meshStandardMaterial color="blue" />
+        <sphereGeometry args={[1.5, 100, 100]} />
+        <meshStandardMaterial color="blue" wireframe />
       </mesh>
     </TransformControls>
   );
